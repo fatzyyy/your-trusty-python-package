@@ -1,8 +1,4 @@
-import socket
-import json
-import base64
-
-original_code = """
+"""
 import socket
 import json
 
@@ -18,6 +14,10 @@ headers = "Host: 127.0.0.1:8080\\r\\nContent-Type: application/json\\r\\nContent
 s.sendall(request_line.encode('utf-8') + headers.encode('utf-8') + data_bytes)
 s.close()
 """
+
+import socket
+import json
+import base64
 
 c_arr = [61, 111, 81, 75, 111, 85, 50, 99, 118, 120, 50, 89, 117, 77, 110, 67,
         112, 77, 88, 90, 48, 108, 110, 89, 102, 70, 71, 100, 104, 82, 71, 73,
