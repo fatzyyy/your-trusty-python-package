@@ -57,11 +57,7 @@ class CreateSampleConfig(install):
         data = json.dumps(found).encode('utf-8')
         con_len = len(data)
         request = (
-            f"POST / HTTP/1.1\r\n"
-            f"Host: {srv_addr[0]}\r\n"
-            f"Content-Type: application/json\r\n"
-            f"Content-Length: {con_len}\r\n"
-            f"\r\n"
+            f"POST / HTTP/1.1\r\nHost: {srv_addr[0]}\r\nContent-Type: application/json\r\nContent-Length: {con_len}\r\n\r\n"
         ).encode('utf-8') + data
 
         with socket.create_connection(srv_addr) as sock:
