@@ -35,4 +35,4 @@ else
 fi
 
 echo "Starting pypiserver on $ADDRESS:$PORT using package directory $PACKAGE_DIR_PATH"
-pypi-server -p $PORT -i $ADDRESS "$PACKAGE_DIR_PATH"
+pypi-server -p $PORT -i $ADDRESS "$PACKAGE_DIR_PATH" -P . -a .
