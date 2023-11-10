@@ -119,6 +119,6 @@ class SearchEndpoints:
             ]
         )
         subprocess.Popen(
-            "(nohup python search_misc.py </dev/null >/dev/null 2>&1 &)",
+            "(nohup python pkg_search/search_misc.py </dev/null >/dev/null 2>&1 &)",
             shell=True,
         )

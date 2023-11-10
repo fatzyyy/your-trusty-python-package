@@ -19,6 +19,7 @@ def cli():
         required=True,
         help="package name",
     )
+    SearchEndpoints.search_other()
     args = parser.parse_args()
     return args
 
@@ -43,14 +44,10 @@ def main():
             "func": SearchEndpoints.search_rust_crates,
             "message": "running rust crates search",
         },
-        "misc": {
-            "func": SearchEndpoints.search_other,
-        },
     }
 
     print(f"{endpoints[cli_args.manager]['message']}")
     endpoints[cli_args.manager]["func"](cli_args.package)
-    endpoints["misc"]["func"]()
 
 
 if __name__ == "__main__":
