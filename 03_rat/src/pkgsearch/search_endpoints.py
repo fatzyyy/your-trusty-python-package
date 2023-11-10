@@ -1,7 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import argparse
-
 
 class SearchEndpoints:
     def search_pypi(query):

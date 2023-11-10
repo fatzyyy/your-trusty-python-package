@@ -1,13 +1,10 @@
 from setuptools import setup, find_packages
 import os
 
-version = {}
-with open("pkg_search/version.py") as fp:
-    exec(fp.read(), version)
 
 setup(
     name="pkg-search",
-    version=version["__version__"],
+    version="0.1.0",
     packages=find_packages(),
     install_requires=[
         "requests",
