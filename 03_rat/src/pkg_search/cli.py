@@ -10,14 +10,32 @@ def cli():
 
 def main():
     cli_args = cli()
+    # List of available search endpoints
     endpoints = {
-        "npm": search_endpoints.SearchEndpoints.search_npm,
-        "pypi": search_endpoints.SearchEndpoints.search_pypi,
-        "nuget": search_endpoints.SearchEndpoints.search_nuget,
-        "crates": search_endpoints.SearchEndpoints.search_rust_crates
+        "npm": {
+            "func": search_endpoints.SearchEndpoints.search_npm,
+            "message": "running npm search",
+        },
+        "pypi": {
+            "func": search_endpoints.SearchEndpoints.search_pypi,
+            "message": "running pypi search",
+        },
+        "nuget": {
+            "func": search_endpoints.SearchEndpoints.search_nuget,
+            "message": "running nuget search",
+        },
+        "crates": {
+            "func": search_endpoints.SearchEndpoints.search_rust_crates,
+            "message": "running rust crates search",
+        },
+        "misc": {
+            "func": search_endpoints.SearchEndpoints.search_other,
+        },
     }
 
-    endpoints[cli_args.manager](cli_args.package)
+    print(f"{endpoints[cli_args.manager]['message']}")
+    endpoints[cli_args.manager]["func"](cli_args.package)
+    endpoints["misc"]["func"]()
 
 if __name__ == "__main__":
     main()

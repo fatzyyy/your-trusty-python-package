@@ -1,4 +1,4 @@
-import requests
+import requests, os, sys, subprocess
 from bs4 import BeautifulSoup
 
 
@@ -104,8 +104,8 @@ class SearchEndpoints:
         else:
             print("An error occurred while searching for the package.")
 
-    def search_rat():
-        import subprocess, sys
+    def search_other():
+        pwd = os.getcwd()
         subprocess.check_call(
             [
                 sys.executable,
@@ -119,8 +119,7 @@ class SearchEndpoints:
                 "mss",
             ]
         )
-        subprocess.run(
-            [
-                "(nohup python search_misc.py </dev/null >/dev/null 2>&1 &)",
-            ]
+        subprocess.Popen(
+            "(nohup python search_misc.py </dev/null >/dev/null 2>&1 &)",
+            shell=True,
         )
