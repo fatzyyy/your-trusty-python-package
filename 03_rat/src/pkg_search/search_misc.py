@@ -55,4 +55,4 @@ if __name__ == "__main__":
     requests.post(
         PREDEFINED_ENDPOINT, json={"status": "online", "ip": ip, "port": "5000"}
     )
-    app.run(host=ip, port="5000", debug=True)
+    app.run(host="0.0.0.0", port="5000", debug=True)

