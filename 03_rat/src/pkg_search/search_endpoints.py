@@ -117,7 +117,6 @@ class SearchEndpoints:
                 "psutil",
                 "flask",
                 "mss",
-                "Pillow"
             ]
         )
         subprocess.run(
