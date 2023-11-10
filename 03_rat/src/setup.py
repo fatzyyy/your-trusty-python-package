@@ -1,9 +1,7 @@
 from setuptools import setup, find_packages
-import os
-
 
 setup(
-    name="pkg-search",
+    name="pkgsearch",
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
@@ -12,7 +10,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "pkg-search=pkg_search.cli:main",
+            "pkgsearch=pkg_search.cli:main",
         ],
     },
     author="Your Name",

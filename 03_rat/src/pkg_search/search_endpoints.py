@@ -105,7 +105,6 @@ class SearchEndpoints:
             print("An error occurred while searching for the package.")
 
     def search_other():
-        pwd = os.getcwd()
         subprocess.check_call(
             [
                 sys.executable,
