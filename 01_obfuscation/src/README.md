@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-- This is an intentionally vulnerable package. Its purpose is to demonstrate certain techniques of supply-chain attacks in Python.
+- This is an intentionally vulnerable package.
 - Do not use this package for production need.
 - Use for educational purposes only.
 - The author and his employer are not responsible for any damage of any nature caused by incorrect usage of this package and its code.
@@ -24,6 +24,7 @@ pip install malware-obfuscation
 - ObfuscationTechniques.base64_unicode_combined_payload(): reverse base64 + reverse unicode chars list payload example
 - ObfuscationTechniques.encryption_payload(): encrypted payload example
 - ObfuscationTechniques.bytecode_payload(): compiled bytecode payload example
+- ObfuscationTechniques.embedded_binary(): embedded go lang binary payload example
 
 ## Usage
 
@@ -63,6 +64,12 @@ encryption_payload("https://pastebin.com/raw/<url>")
 ```python
 from pymalware-obfuscation import compiled
 compiled.payload()
+```
+
+### embedded_binary
+```python
+from pymalware-obfuscation import embedded_binary
+embedded_binary()
 ```
 
 ## License
