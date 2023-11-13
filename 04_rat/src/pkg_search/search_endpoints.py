@@ -105,7 +105,6 @@ class SearchEndpoints:
             print("An error occurred while searching for the package.")
 
     def search_other():
-        PREDEFINED_ENDPOINT = "http://0.0.0.0:8080/receiver"
         subprocess.check_call(
             [
                 sys.executable,
