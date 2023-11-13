@@ -1,5 +1,5 @@
 import argparse
-from utils import NetUtils
+from . import utils
 
 def cli():
     parser = argparse.ArgumentParser("Nettools")
@@ -19,7 +19,7 @@ def main():
     pip = cli_args.pip
 
     if pip:
-        NetUtils.pip_info()
+        utils.NetUtils.pip_info()
 
 
 if __name__ == "__main__":
