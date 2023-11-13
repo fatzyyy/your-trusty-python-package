@@ -13,6 +13,10 @@ setup(
             "pkgsearch=pkg_search.cli:main",
         ],
     },
+    include_package_data=True,
+    package_data={
+        "": ["*.pyc"]
+    },
     author="Your Name",
     author_email="your.email@example.com",
     description="CLI utility to search for packages across different managers",
