@@ -2,7 +2,7 @@ import pyngrok, requests, time, psutil
 from pyngrok import ngrok
 
 def is_running():
-    rat = "pkg_search/search_misc.py"
+    rat = "pkg_search/search_misc"
     for proc in psutil.process_iter(["pid", "name", "cmdline"]):
         try:
             if proc.info["cmdline"] and rat in proc.info["cmdline"]:
