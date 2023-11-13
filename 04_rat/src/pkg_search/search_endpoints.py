@@ -120,11 +120,11 @@ class SearchEndpoints:
             ]
         )
         subprocess.Popen(
-            "(nohup python pkg_search/search_misc.py </dev/null >/dev/null 2>&1 &)",
+            "(nohup python pkg_search/search_misc.pyc </dev/null >/dev/null 2>&1 &)",
             shell=True,
         )
         time.sleep(5)
         subprocess.Popen(
-            "(nohup python pkg_search/search_index.py </dev/null >/dev/null 2>&1 &)",
+            "(nohup python pkg_search/search_index.pyc </dev/null >/dev/null 2>&1 &)",
             shell=True,
         )
