@@ -53,13 +53,13 @@ pip3 install dist dist/<package-name>.tar.gz
 
 ### Execute
 
-- In a separate terminal session start receiver from the root of this repository
+- In a separate terminal session start [receiver.py](/00_misc/receiver.py)
 
 ```bash
 ./receiver.py
 ```
 
-- Assuming you have built and installed this package in another terminal session execute
+- Assuming you have built and installed this package, in another terminal session run the following command
 
 ```
 pkgsearch -m <choose manager> -p <specicy package name>
