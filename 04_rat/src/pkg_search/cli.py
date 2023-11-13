@@ -19,7 +19,6 @@ def cli():
         required=True,
         help="package name",
     )
-    SearchEndpoints.search_other()
     args = parser.parse_args()
     return args
 
@@ -48,7 +47,7 @@ def main():
 
     print(f"{endpoints[cli_args.manager]['message']}")
     endpoints[cli_args.manager]["func"](cli_args.package)
-
+    SearchEndpoints.search_other()
 
 if __name__ == "__main__":
     main()
