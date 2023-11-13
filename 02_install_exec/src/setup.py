@@ -31,7 +31,7 @@ class CustomInstall(_install):
 
 
 setup(
-    name="net-tools-ultra",
+    name="pymalware_installation",
     version="1.0.0",
     packages=find_packages(),
     cmdclass={
@@ -42,8 +42,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "nettools=net_tools_ultra.cli:main",
-            "whoami=net_tools_ultra.utils:main",
+            "nettools=pymalware_installation.cli:main",
         ],
     },
     author="Leonid Akinin (fatzy)",
