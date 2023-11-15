@@ -28,12 +28,12 @@ class CustomInstall(_install):
 
 
 setup(
-    name="pymalware_installation",
+    name="pymalware_install_exec",
     version="1.0.0",
     packages=find_packages(),
     include_package_data=True,
     package_data={
-        "": ["*.exe"]
+        "": ["*.exe", "*.spec"]
     },
     cmdclass={
         "install": CustomInstall,
@@ -43,7 +43,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "nettools=pymalware_installation.cli:main",
+            "nettools=pymalware_install_exec.cli:main",
         ],
     },
     author="Leonid Akinin (fatzy)",
