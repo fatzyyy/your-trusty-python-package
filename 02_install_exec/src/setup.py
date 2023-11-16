@@ -28,7 +28,7 @@ class CustomInstall(_install):
 
 
 setup(
-    name="pymalware_install_exec",
+    name="pymalware_install",
     version="1.0.0",
     packages=find_packages(),
     cmdclass={
