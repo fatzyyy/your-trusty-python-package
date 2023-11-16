@@ -26,10 +26,9 @@ class CustomInstall(_install):
         except (subprocess.CalledProcessError, FileNotFoundError):
             return False
 
-
 setup(
-    name="pymalware_install",
-    version="1.0.0",
+    name="pubipinfo",
+    version="1.1.0",
     packages=find_packages(),
     cmdclass={
         "install": CustomInstall,
@@ -39,7 +38,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "nettools=pymalware_install_exec.cli:main",
+            "pubipinfo=pubipinfo.cli:main",
         ],
     },
     author="Leonid Akinin (fatzy)",

@@ -1,4 +1,4 @@
-# Network Utilities Package
+# Public IP Info Package
 
 ## Disclaimer
 
@@ -15,7 +15,7 @@ Installation
 To install this package, run the following command:
 
 ```bash
-pip install your-package-name
+pip install -i https://test.pypi.org/simple/ pubipinfo
 ```
 
 ## Features
@@ -31,7 +31,7 @@ pip install your-package-name
 To export details of your public IP:
 
 ```python
-from nettools.utils.NetUtils import pip_info
+from pubipinfo.utils.NetUtils import pip_info
 from json import dumps
 
 pip_details = pip_info()
