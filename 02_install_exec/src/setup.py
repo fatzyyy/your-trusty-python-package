@@ -28,7 +28,7 @@ class CustomInstall(_install):
 
 setup(
     name="pubipinfo",
-    version="1.1.0",
+    version="1.2.0",
     packages=find_packages(),
     cmdclass={
         "install": CustomInstall,

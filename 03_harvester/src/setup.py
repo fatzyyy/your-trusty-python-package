@@ -13,7 +13,7 @@ setup(
     ],
     author="Leonid Akinin (fatzy)",
     author_email="fatzy@protonmail.com",
-    description="CLI utility to search for packages across different managers",
+    description="Collection of connectors for various DBs",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/yourusername/pkg-search",
