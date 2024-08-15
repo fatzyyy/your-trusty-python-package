@@ -1,5 +1,5 @@
 # Your Trusty Python Package
-This repository contains sample code from the "Your Trusty Python Package" tech talk.
+This repository contains sample code from the [Your Trusty Python Package](https://www.youtube.com/watch?v=2QhVf5JAXfM) tech talk.
 
 ## Disclaimer
 
